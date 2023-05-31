@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="TreeEditing\Utils\" />
+		<Folder Include="TreeEditing\Utils\" />
 	</ItemGroup>
 
 </Project>

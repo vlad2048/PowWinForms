@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Libs\PowWinForms\PowWinForms.csproj" />
+		<ProjectReference Include="..\..\Libs\PowWinForms\PowWinForms.csproj" />
 	</ItemGroup>
 
 </Project>
