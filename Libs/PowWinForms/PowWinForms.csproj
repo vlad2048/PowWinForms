@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Jot" Version="2.1.16" />
+		<PackageReference Include="ObjectListView" Version="1.0.0">
+			<ExcludeAssets>contentFiles</ExcludeAssets>
+		</PackageReference>
+		<PackageReference Include="PowRxVar.Maybe" Version="0.0.17" />
+		<PackageReference Include="PowTrees" Version="0.0.15" />
+		<PackageReference Include="ReactiveUI.Events.Winforms" Version="15.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="TreeEditing\Utils\" />
+	</ItemGroup>
+
+</Project>
