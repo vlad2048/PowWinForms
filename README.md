@@ -8,7 +8,7 @@
 
 ## Features
 
-- Persist windows position, size, ... (https://github.com/anakic/Jot)
+- Persist windows position and other objects (https://github.com/anakic/Jot)
 - Binds controls to reactive variables (https://github.com/vlad2048/PowRxVar)
 - Ability to edit trees (https://github.com/vlad2048/PowTrees & ObjectListView)
 
@@ -18,6 +18,33 @@
 ```c#
 // Add a call to Track() when creating a window
 var win = new MainWindow().Track();
+```
+
+### Persist custom objects
+```c#
+class UserPrefs
+{
+	public string? LastFolder { get; set; }
+
+	public event EventHandler? Saving;
+	public void Save() => Saving?.Invoke(null, EventArgs.Empty);
+
+	static UserPrefs()
+	{
+		WinFormsUtils.Tracker.Configure<UserPrefs>()
+			.Properties(e => new
+			{
+				e.LastFolder
+			})
+			.PersistOn(nameof(UserPrefs.Saving));
+	}
+}
+```
+Usage:
+```c#
+var userPrefs = new UserPrefs().Track();
+// ...
+userPrefs.Save();
 ```
 
 ### Create reactive variables
