@@ -26,9 +26,10 @@ class UserPrefs
 {
 	public string? LastFolder { get; set; }
 
-	public event EventHandler? Saving;
+
 	public void Save() => Saving?.Invoke(null, EventArgs.Empty);
 
+	public event EventHandler? Saving;
 	static UserPrefs()
 	{
 		WinFormsUtils.Tracker.Configure<UserPrefs>()
