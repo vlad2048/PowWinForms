@@ -20,11 +20,11 @@ public static class TreeEvtExts
 	public static IObservable<NodeRemovedEvt <T>> WhenNodeRemoved <T>(this ITreeEvtObs<T> obs) => obs.WhenChanged.OfType<NodeRemovedEvt <T>>();
 	public static IObservable<NodeChangedEvt <T>> WhenNodeChanged <T>(this ITreeEvtObs<T> obs) => obs.WhenChanged.OfType<NodeChangedEvt <T>>();
 
-	public static void SignalTreeLoaded <T>(this ITreeEvtSig<T> sig, TNod<T> root                 ) => sig.SignalChanged(new TreeLoadedEvt  <T>(root)               );
-	public static void SignalTreeUnladed<T>(this ITreeEvtSig<T> sig                               ) => sig.SignalChanged(new TreeUnloadedEvt<T>()                   );
-	public static void SignalNodeAdded  <T>(this ITreeEvtSig<T> sig, TNod<T> parent, T nodeContent) => sig.SignalChanged(new NodeAddedEvt   <T>(parent, nodeContent));
-	public static void SignalNodeRemoved<T>(this ITreeEvtSig<T> sig, TNod<T> node                 ) => sig.SignalChanged(new NodeRemovedEvt <T>(node)               );
-	public static void SignalNodeChanged<T>(this ITreeEvtSig<T> sig, TNod<T> node, T nodeContent  ) => sig.SignalChanged(new NodeChangedEvt <T>(node, nodeContent)  );
+	public static void SignalTreeLoaded  <T>(this ITreeEvtSig<T> sig, TNod<T> root                 ) => sig.SignalChanged(new TreeLoadedEvt  <T>(root)               );
+	public static void SignalTreeUnloaded<T>(this ITreeEvtSig<T> sig                               ) => sig.SignalChanged(new TreeUnloadedEvt<T>()                   );
+	public static void SignalNodeAdded   <T>(this ITreeEvtSig<T> sig, TNod<T> parent, T nodeContent) => sig.SignalChanged(new NodeAddedEvt   <T>(parent, nodeContent));
+	public static void SignalNodeRemoved <T>(this ITreeEvtSig<T> sig, TNod<T> node                 ) => sig.SignalChanged(new NodeRemovedEvt <T>(node)               );
+	public static void SignalNodeChanged <T>(this ITreeEvtSig<T> sig, TNod<T> node, T nodeContent  ) => sig.SignalChanged(new NodeChangedEvt <T>(node, nodeContent)  );
 }
 // @formatter:on
 

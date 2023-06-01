@@ -120,7 +120,7 @@ static class TreeEditorLogic
 
 		ui.clearBtn.Events().Click.Subscribe(_ =>
 		{
-			evtSig.SignalTreeUnladed();
+			evtSig.SignalTreeUnloaded();
 		}).D(d);
 
 		return d;
