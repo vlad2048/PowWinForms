@@ -35,6 +35,7 @@ static class TreeEditorLogic
 			out var tree,
 			out var selNode,
 			out var evtSig,
+			out var evtObs,
 			ui.treeCtrl
 		).D(d);
 
@@ -47,40 +48,6 @@ static class TreeEditorLogic
 		{
 			Debug.WriteLine($"SelNode <- {mayNode}");
 		}).D(d);
-
-		return d;
-	}
-
-
-	private static IDisposable SetupNodeEditor(TreeEditorWin ui, IRoVar<Maybe<TNod<Rec>>> selNode, ITreeEvtSig<Rec> evtSig)
-	{
-		var d = new Disp();
-
-		var disableEvents = false;
-
-		selNode.Subscribe(mayNode =>
-		{
-			disableEvents = true;
-			if (mayNode.IsSome(out var node))
-			{
-				ui.nameText.Enabled = true;
-				ui.nameText.Text = node.V.Name;
-			}
-			else
-			{
-				ui.nameText.Enabled = false;
-				ui.nameText.Text = string.Empty;
-			}
-			disableEvents = false;
-		}).D(d);
-
-		ui.nameText.Events().TextChanged
-			.Where(_ => !disableEvents)
-			.Subscribe(_ =>
-			{
-				if (selNode.V.IsNone(out var node)) return;
-				evtSig.SignalNodeChanged(node, new Rec(ui.nameText.Text));
-			}).D(d);
 
 		return d;
 	}
@@ -155,6 +122,40 @@ static class TreeEditorLogic
 		{
 			evtSig.SignalTreeUnladed();
 		}).D(d);
+
+		return d;
+	}
+
+
+	private static IDisposable SetupNodeEditor(TreeEditorWin ui, IRoVar<Maybe<TNod<Rec>>> selNode, ITreeEvtSig<Rec> evtSig)
+	{
+		var d = new Disp();
+
+		var disableEvents = false;
+
+		selNode.Subscribe(mayNode =>
+		{
+			disableEvents = true;
+			if (mayNode.IsSome(out var node))
+			{
+				ui.nameText.Enabled = true;
+				ui.nameText.Text = node.V.Name;
+			}
+			else
+			{
+				ui.nameText.Enabled = false;
+				ui.nameText.Text = string.Empty;
+			}
+			disableEvents = false;
+		}).D(d);
+
+		ui.nameText.Events().TextChanged
+			.Where(_ => !disableEvents)
+			.Subscribe(_ =>
+			{
+				if (selNode.V.IsNone(out var node)) return;
+				evtSig.SignalNodeChanged(node, new Rec(ui.nameText.Text));
+			}).D(d);
 
 		return d;
 	}

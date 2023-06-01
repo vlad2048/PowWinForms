@@ -14,6 +14,7 @@ public static class TreeEditor
 		out IRoVar<Maybe<TNod<T>>> tree,
 		out IRoVar<Maybe<TNod<T>>> selNode,
 		out ITreeEvtSig<T> evtSig,
+		out ITreeEvtObs<T> evtObs,
 		TreeListView ctrl
 	)
 	{
@@ -22,7 +23,7 @@ public static class TreeEditor
 		TreeCtrlOps.SetNodGeneric<T>(ctrl);
 		var treeVar = Var.Make(May.None<TNod<T>>()).D(d);
 		tree = treeVar;
-		(evtSig, var evtObs) = TreeEvt<T>.Make().D(d);
+		(evtSig, evtObs) = TreeEvt<T>.Make().D(d);
 		TreeCtrlOps.GetSelectedNode<T>(out var selNodeRaw, ctrl).D(d);
 
 		UpdateTreeAndCtrlOnEvents(out var whenSelNodeChanged, evtObs, treeVar, ctrl).D(d);
