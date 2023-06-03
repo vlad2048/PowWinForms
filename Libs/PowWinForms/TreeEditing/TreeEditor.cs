@@ -89,14 +89,29 @@ public static class TreeEditor
 			TreeCtrlOps.NotifyNodeRemoved(ctrl, e.Node);
 		}).D(d);
 
-		evtObs.WhenNodeChanged().Subscribe(e =>
+
+		evtObs.WhenNodeChanged()
+			.Buffer(TimeSpan.FromMilliseconds(500))
+			.Subscribe(list =>
+			{
+				foreach (var e in list)
+				{
+					L("[NodeChanged]");
+					if (tree.V.IsNone(out var root)) throw new ArgumentException("Cannot change a node on an empty tree");
+					if (!root.Contains(e.Node)) throw new ArgumentException("Cannot find the node to change");
+					e.Node.ChangeContent(e.NodeContent);
+					TreeCtrlOps.NotifyNodeChanged(ctrl, e.Node);
+				}
+			}).D(d);
+
+		/*evtObs.WhenNodeChanged().Subscribe(e =>
 		{
 			L("[NodeChanged]");
 			if (tree.V.IsNone(out var root)) throw new ArgumentException("Cannot change a node on an empty tree");
 			if (!root.Contains(e.Node)) throw new ArgumentException("Cannot find the node to change");
 			e.Node.ChangeContent(e.NodeContent);
 			TreeCtrlOps.NotifyNodeChanged(ctrl, e.Node);
-		}).D(d);
+		}).D(d);*/
 
 		return d;
 	}
