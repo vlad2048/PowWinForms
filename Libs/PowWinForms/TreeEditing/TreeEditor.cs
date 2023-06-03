@@ -90,7 +90,7 @@ public static class TreeEditor
 		}).D(d);
 
 
-		evtObs.WhenNodeChanged()
+		/*evtObs.WhenNodeChanged()
 			.Buffer(TimeSpan.FromMilliseconds(500))
 			.Subscribe(list =>
 			{
@@ -102,7 +102,7 @@ public static class TreeEditor
 					e.Node.ChangeContent(e.NodeContent);
 					TreeCtrlOps.NotifyNodeChanged(ctrl, e.Node);
 				}
-			}).D(d);
+			}).D(d);*/
 
 		/*evtObs.WhenNodeChanged().Subscribe(e =>
 		{
