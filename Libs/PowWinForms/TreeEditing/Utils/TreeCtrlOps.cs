@@ -5,9 +5,20 @@ using PowRxVar;
 
 namespace PowWinForms.TreeEditing.Utils;
 
-static class TreeCtrlOps
+public static class TreeCtrlOps
 {
-	public static void SetNodGeneric<T>(TreeListView ctrl)
+	public static Maybe<TNod<T>> GetNodeUnderMouse<T>(TreeListView ctrl)
+	{
+		if (ctrl.MouseMoveHitTest == null) return May.None<TNod<T>>();
+		var obj = ctrl.MouseMoveHitTest.RowObject;
+		if (obj == null) return May.None<TNod<T>>();
+		if (obj is not TNod<T> node) return May.None<TNod<T>>();
+		return May.Some(node);
+	}
+
+
+
+    internal static void SetNodGeneric<T>(TreeListView ctrl)
 	{
 		ctrl.CanExpandGetter = delegate (object o)
 		{
@@ -26,7 +37,7 @@ static class TreeCtrlOps
 		};
 	}
 
-	public static IDisposable GetSelectedNode<T>(
+	internal static IDisposable GetSelectedNode<T>(
 		out IRoVar<Maybe<TNod<T>>> selectedNode,
 		TreeListView ctrl
 	)
@@ -49,23 +60,14 @@ static class TreeCtrlOps
 		return d;
 	}
 
-	public static Maybe<TNod<T>> GetNodeUnderMouse<T>(TreeListView ctrl)
-	{
-		if (ctrl.MouseMoveHitTest == null) return May.None<TNod<T>>();
-		var obj = ctrl.MouseMoveHitTest.RowObject;
-		if (obj == null) return May.None<TNod<T>>();
-		if (obj is not TNod<T> node) return May.None<TNod<T>>();
-		return May.Some(node);
-	}
-
-
-	public static void NotifyTreeLoaded<T>(TreeListView ctrl, TNod<T> root)
+	
+	internal static void NotifyTreeLoaded<T>(TreeListView ctrl, TNod<T> root)
 	{
 		ctrl.SetObjects(root.ToArr());
 		ctrl.ExpandAll();
 	}
 
-	public static void NotifyTreeUnloaded(TreeListView ctrl)
+	internal static void NotifyTreeUnloaded(TreeListView ctrl)
 	{
 		ctrl.ClearObjects();
 		ctrl.SelectedIndices.Clear();
@@ -75,7 +77,7 @@ static class TreeCtrlOps
 	/// ItemSelectionChanged will be fired
 	/// so the caller doesn't need to do anything special
 	/// </summary>
-	public static void NotifyNodeAddedAndSelectIt<T>(TreeListView ctrl, TNod<T> parent, TNod<T> child)
+	internal static void NotifyNodeAddedAndSelectIt<T>(TreeListView ctrl, TNod<T> parent, TNod<T> child)
 	{
 		ctrl.RefreshObject(parent); // needed for non leaf nodes (otherwise it doesn't appear)
 		ctrl.Reveal(child, true);
@@ -85,12 +87,12 @@ static class TreeCtrlOps
 	/// ItemSelectionChanged will NOT be fired
 	/// So the caller should also set the SelectedNode to None
 	/// </summary>
-	public static void NotifyNodeRemoved<T>(TreeListView ctrl, TNod<T> node)
+	internal static void NotifyNodeRemoved<T>(TreeListView ctrl, TNod<T> node)
 	{
 		ctrl.RemoveObject(node);
 	}
 
-	public static void NotifyNodeChanged<T>(TreeListView ctrl, TNod<T> node)
+	internal static void NotifyNodeChanged<T>(TreeListView ctrl, TNod<T> node)
 	{
 		ctrl.RefreshObject(node);
 	}
