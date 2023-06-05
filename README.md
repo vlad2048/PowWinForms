@@ -14,6 +14,23 @@
 
 ## Usage
 
+### Use RX for a control/form
+This ties the reactive logic to the lifetime of the control (using the HandleCreated / HandleDestroyed events)
+```c#
+partial class MainWindow : Form
+{
+	public MainWindow()
+	{
+		InitializeComponent();
+
+		this.InitRX(d =>
+		{
+			MyLogic.Init(this).D(d);
+		});
+	}
+}
+```
+
 ### Persist windows
 ```c#
 // Add a call to Track() when creating a window

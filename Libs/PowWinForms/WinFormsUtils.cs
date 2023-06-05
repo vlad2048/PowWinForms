@@ -14,6 +14,21 @@ public static class WinFormsUtils
 		TrackerSetup.Init(Tracker);
 	}
 
+
+	/// <summary>
+	/// Setup the reactive code for a control<br/>
+	/// Use this in the control's constructor after the call to InitializeComponent<br/>
+	/// It will call the initAction on HandleCreated and dispose the IRoDispBase given to it in HandleDestroyed
+	/// </summary>
+	/// <param name="ctrl">the control (use this)</param>
+	/// <param name="initAction">initAction</param>
+	public static void InitRX(this Control ctrl, Action<IRoDispBase> initAction)
+	{
+		var d = new Disp().DisposeOnHandleDestroyed(ctrl);
+		ctrl.Events().HandleCreated.Subscribe(_ => initAction(d)).D(d);
+	}
+
+
 	/// <summary>
 	/// Persist Forms position, size, ... <br/>
 	/// Tracking for other object types can be setup by using WinFormsUtils.Tracker <br/>
@@ -24,7 +39,7 @@ public static class WinFormsUtils
 		switch (obj)
 		{
 			case Form form:
-				form.Events().Load.Subscribe(_ => Tracker.Track(obj)).DD(form);
+				form.Events().Load.Subscribe(_ => Tracker.Track(obj)).DisposeOnHandleDestroyed(form);
 				break;
 
 			default:
@@ -42,14 +57,7 @@ public static class WinFormsUtils
 	public static bool IsDesignMode => LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
 
-	/// <summary>
-	/// Create a disposable based on the lifetime of the control
-	/// </summary>
-	public static IRoDispBase MakeD(this Control ctrl) => new Disp().DD(ctrl);
-
-
-
-	private static D DD<D>(this D dispDst, Control ctrl) where D : IDisposable
+	private static D DisposeOnHandleDestroyed<D>(this D dispDst, Control ctrl) where D : IDisposable
 	{
 		ctrl.Events().HandleDestroyed.Take(1).Subscribe(_ => dispDst.Dispose());
 		return dispDst;

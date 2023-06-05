@@ -7,12 +7,8 @@ partial class TreeEditorWin : Form
 {
 	public TreeEditorWin()
 	{
-	InitializeComponent();
+		InitializeComponent();
 
-	var d = this.MakeD();
-
-	this.Events().HandleCreated.Subscribe(_ => {
-	TreeEditorLogic.Init(this).D(d);
-	});
+		this.InitRX(d => TreeEditorLogic.Init(this).D(d));
 	}
 }

@@ -9,13 +9,8 @@ partial class MainWin : Form
 	public MainWin()
 	{
 		InitializeComponent();
-		var d = this.MakeD();
-		this.Events().HandleCreated.Subscribe(_ =>
-		{
 
-			HookBtn<TreeEditorWin>(treeEditorBtn).D(d);
-
-		});
+		this.InitRX(d => HookBtn<TreeEditorWin>(treeEditorBtn).D(d));
 	}
 
 	private static IDisposable HookBtn<T>(Button btn) where T : Form, new() =>
