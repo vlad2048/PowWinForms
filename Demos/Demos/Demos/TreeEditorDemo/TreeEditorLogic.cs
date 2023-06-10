@@ -1,10 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Reactive.Linq;
 using BrightIdeasSoftware;
+using PowBasics.CollectionsExt;
 using PowMaybe;
 using PowRxVar;
+using PowTrees.Algorithms;
 using PowWinForms.TreeEditing;
 using PowWinForms.TreeEditing.Structs;
+using PowWinForms.Utils;
 
 namespace Demos.Demos.TreeEditorDemo;
 
@@ -48,6 +51,18 @@ static class TreeEditorLogic
 		{
 			Debug.WriteLine($"SelNode <- {mayNode}");
 		}).D(d);
+
+		tree
+			.ObserveOnWinFormsUIThread()
+			.Subscribe(mayVal =>
+			{
+				var str = mayVal.IsSome(out var val) switch
+				{
+					false => new[] { "None" },
+					true => val!.LogToStrings()
+				};
+				ui.treeText.Text = str.JoinText(Environment.NewLine);
+			}).D(d);
 
 		return d;
 	}

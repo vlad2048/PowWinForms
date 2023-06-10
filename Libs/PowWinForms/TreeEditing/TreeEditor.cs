@@ -21,7 +21,7 @@ public static class TreeEditor
 		var d = new Disp();
 
 		TreeCtrlOps.SetNodGeneric<T>(ctrl);
-		var treeVar = Var.Make(May.None<TNod<T>>()).D(d);
+		var treeVar = Var.MakeNoCheck(May.None<TNod<T>>()).D(d);
 		tree = treeVar;
 		(evtSig, evtObs) = TreeEvt<T>.Make().D(d);
 		TreeCtrlOps.GetSelectedNode<T>(out var selNodeRaw, ctrl).D(d);
@@ -64,6 +64,7 @@ public static class TreeEditor
 		evtObs.WhenTreeUnloaded().Subscribe(_ =>
 		{
 			L("[TreeUnloaded]");
+			tree.V = May.None<TNod<T>>();
 			TreeCtrlOps.NotifyTreeUnloaded(ctrl);
 		}).D(d);
 
@@ -74,6 +75,7 @@ public static class TreeEditor
 			if (tree.V.IsNone(out var root)) throw new ArgumentException("Cannot add a parented node on an empty tree");
 			if (!root.Contains(e.Parent)) throw new ArgumentException("Cannot find the parent to add a node under");
 			e.Parent.AddChild(node);
+			tree.V = tree.V;
 			TreeCtrlOps.NotifyNodeAddedAndSelectIt(ctrl, e.Parent, node);
 		}).D(d);
 
@@ -85,6 +87,7 @@ public static class TreeEditor
 			var parent = e.Node.Parent;
 			if (parent == null) throw new ArgumentException("Cannot remove the root node");
 			parent.RemoveChild(e.Node);
+			tree.V = tree.V;
 			selNodeSubj.OnNext(May.None<TNod<T>>());
 			TreeCtrlOps.NotifyNodeRemoved(ctrl, e.Node);
 		}).D(d);
@@ -100,18 +103,10 @@ public static class TreeEditor
 					if (tree.V.IsNone(out var root)) throw new ArgumentException("Cannot change a node on an empty tree");
 					if (!root.Contains(e.Node)) throw new ArgumentException("Cannot find the node to change");
 					e.Node.ChangeContent(e.NodeContent);
+					tree.V = tree.V;
 					TreeCtrlOps.NotifyNodeChanged(ctrl, e.Node);
 				}
 			}).D(d);
-
-		/*evtObs.WhenNodeChanged().Subscribe(e =>
-		{
-			L("[NodeChanged]");
-			if (tree.V.IsNone(out var root)) throw new ArgumentException("Cannot change a node on an empty tree");
-			if (!root.Contains(e.Node)) throw new ArgumentException("Cannot find the node to change");
-			e.Node.ChangeContent(e.NodeContent);
-			TreeCtrlOps.NotifyNodeChanged(ctrl, e.Node);
-		}).D(d);*/
 
 		return d;
 	}
