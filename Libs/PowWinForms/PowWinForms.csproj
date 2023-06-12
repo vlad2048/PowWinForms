@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -11,9 +10,9 @@
 		<PackageReference Include="ObjectListView" Version="1.0.0">
 			<ExcludeAssets>contentFiles</ExcludeAssets>
 		</PackageReference>
-		<PackageReference Include="PowBasics" Version="0.0.11" />
-		<PackageReference Include="PowRxVar.Maybe" Version="0.0.26" />
-		<PackageReference Include="PowTrees" Version="0.0.20" />
+		<PackageReference Include="PowBasics" Version="0.0.12" />
+		<PackageReference Include="PowRxVar.Maybe" Version="0.0.27" />
+		<PackageReference Include="PowTrees" Version="0.0.21" />
 		<PackageReference Include="ReactiveUI.Events.Winforms" Version="15.1.1" />
 	</ItemGroup>
 

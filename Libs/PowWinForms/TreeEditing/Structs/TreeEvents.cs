@@ -38,7 +38,7 @@ public interface ITreeEvtSig<T>
 	void SignalChanged(ITreeEvt<T> evt);
 }
 
-public class TreeEvt<T> : ITreeEvtSig<T>, ITreeEvtObs<T>, IDisposable
+public sealed class TreeEvt<T> : ITreeEvtSig<T>, ITreeEvtObs<T>, IDisposable
 {
 	private readonly Disp d = new();
 	public void Dispose() => d.Dispose();
