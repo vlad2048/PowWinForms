@@ -38,14 +38,13 @@ public static class TreeCtrlOps
 	}
 
 	internal static IDisposable GetSelectedNode<T>(
-		out IRoVar<Maybe<TNod<T>>> selectedNode,
+		out IRoMayVar<TNod<T>> selectedNode,
 		TreeListView ctrl
 	)
 	{
 		var d = new Disp();
 		
-		selectedNode = Var.Make(
-			May.None<TNod<T>>(),
+		selectedNode = VarMay.Make(
 			Observable.Merge(
 				ctrl.Events().ItemSelectionChanged.Select(e => e.IsSelected switch
 				{

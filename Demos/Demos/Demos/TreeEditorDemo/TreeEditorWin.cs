@@ -3,7 +3,7 @@ using PowWinForms;
 
 namespace Demos.Demos.TreeEditorDemo;
 
-partial class TreeEditorWin : Form
+sealed partial class TreeEditorWin : Form
 {
 	public TreeEditorWin()
 	{

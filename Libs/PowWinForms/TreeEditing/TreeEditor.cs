@@ -11,8 +11,8 @@ namespace PowWinForms.TreeEditing;
 public static class TreeEditor
 {
 	public static IDisposable Setup<T>(
-		out IRoVar<Maybe<TNod<T>>> tree,
-		out IRoVar<Maybe<TNod<T>>> selNode,
+		out IRoMayVar<TNod<T>> tree,
+		out IRoMayVar<TNod<T>> selNode,
 		out ITreeEvtSig<T> evtSig,
 		out ITreeEvtObs<T> evtObs,
 		TreeListView ctrl
@@ -21,15 +21,14 @@ public static class TreeEditor
 		var d = new Disp();
 
 		TreeCtrlOps.SetNodGeneric<T>(ctrl);
-		var treeVar = Var.MakeNoCheck(May.None<TNod<T>>()).D(d);
+		var treeVar = VarMayNoCheck.Make<TNod<T>>().D(d);
 		tree = treeVar;
 		(evtSig, evtObs) = TreeEvt<T>.Make().D(d);
 		TreeCtrlOps.GetSelectedNode<T>(out var selNodeRaw, ctrl).D(d);
 
 		UpdateTreeAndCtrlOnEvents(out var whenSelNodeChanged, evtObs, treeVar, ctrl).D(d);
 
-		selNode = Var.Make(
-			May.None<TNod<T>>(),
+		selNode = VarMay.Make(
 			Observable.Merge(
 				selNodeRaw,
 				evtObs.WhenTreeLoaded().Select(_ => May.None<TNod<T>>()),
@@ -44,7 +43,7 @@ public static class TreeEditor
 	private static IDisposable UpdateTreeAndCtrlOnEvents<T>(
 		out IObservable<Maybe<TNod<T>>> whenSelNodeChanged,
 		ITreeEvtObs<T> evtObs,
-		IRwVar<Maybe<TNod<T>>> tree,
+		IRwMayVar<TNod<T>> tree,
 		TreeListView ctrl
 	)
 	{
