@@ -15,10 +15,9 @@ public static class TreeCtrlOps
 		if (obj is not TNod<T> node) return May.None<TNod<T>>();
 		return May.Some(node);
 	}
+	
 
-
-
-    internal static void SetNodGeneric<T>(TreeListView ctrl)
+    public static void SetNodGeneric<T>(TreeListView ctrl)
 	{
 		ctrl.CanExpandGetter = delegate (object o)
 		{
@@ -37,7 +36,8 @@ public static class TreeCtrlOps
 		};
 	}
 
-	internal static IDisposable GetSelectedNode<T>(
+
+    public static IDisposable GetSelectedNode<T>(
 		out IRoMayVar<TNod<T>> selectedNode,
 		TreeListView ctrl
 	)
@@ -60,41 +60,46 @@ public static class TreeCtrlOps
 	}
 
 	
-	internal static void NotifyTreeLoaded<T>(TreeListView ctrl, TNod<T> root)
+    public static void NotifyTreeLoaded<T>(TreeListView ctrl, TNod<T> root)
 	{
 		ctrl.SetObjects(root.ToArr());
 		ctrl.ExpandAll();
 	}
 
-	internal static void NotifyTreeUnloaded(TreeListView ctrl)
+
+    public static void NotifyTreeUnloaded(TreeListView ctrl)
 	{
 		ctrl.ClearObjects();
 		ctrl.SelectedIndices.Clear();
 	}
 
+
 	/// <summary>
 	/// ItemSelectionChanged will be fired
 	/// so the caller doesn't need to do anything special
 	/// </summary>
-	internal static void NotifyNodeAddedAndSelectIt<T>(TreeListView ctrl, TNod<T> parent, TNod<T> child)
+	public static void NotifyNodeAddedAndSelectIt<T>(TreeListView ctrl, TNod<T> parent, TNod<T> child)
 	{
 		ctrl.RefreshObject(parent); // needed for non leaf nodes (otherwise it doesn't appear)
 		ctrl.Reveal(child, true);
 	}
 
+
 	/// <summary>
 	/// ItemSelectionChanged will NOT be fired
 	/// So the caller should also set the SelectedNode to None
 	/// </summary>
-	internal static void NotifyNodeRemoved<T>(TreeListView ctrl, TNod<T> node)
+	public static void NotifyNodeRemoved<T>(TreeListView ctrl, TNod<T> node)
 	{
 		ctrl.RemoveObject(node);
 	}
 
-	internal static void NotifyNodeChanged<T>(TreeListView ctrl, TNod<T> node)
+
+	public static void NotifyNodeChanged<T>(TreeListView ctrl, TNod<T> node)
 	{
 		ctrl.RefreshObject(node);
 	}
+
 
 	private static T[] ToArr<T>(this T obj) => new[] { obj };
 }
