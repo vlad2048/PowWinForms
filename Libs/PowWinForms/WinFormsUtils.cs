@@ -24,7 +24,7 @@ public static class WinFormsUtils
 	/// <param name="initAction">initAction</param>
 	public static void InitRX(this Control ctrl, Action<IRoDispBase> initAction)
 	{
-		var d = new Disp().DisposeOnHandleDestroyed(ctrl);
+		var d = new Disp().D(ctrl);
 		ctrl.Events().HandleCreated.Subscribe(_ => initAction(d)).D(d);
 	}
 
@@ -39,7 +39,7 @@ public static class WinFormsUtils
 		switch (obj)
 		{
 			case Form form:
-				form.Events().Load.Subscribe(_ => Tracker.Track(obj)).DisposeOnHandleDestroyed(form);
+				form.Events().Load.Subscribe(_ => Tracker.Track(obj)).D(form);
 				break;
 
 			default:
@@ -57,9 +57,17 @@ public static class WinFormsUtils
 	public static bool IsDesignMode => LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
 
-	private static D DisposeOnHandleDestroyed<D>(this D dispDst, Control ctrl) where D : IDisposable
+	/// <summary>
+	/// Dispose of a Disposable when a Control either receives the HandleDestroyed or Disposed event
+	/// </summary>
+	public static D D<D>(this D dispDst, Control ctrl) where D : IDisposable
 	{
-		ctrl.Events().HandleDestroyed.Take(1).Subscribe(_ => dispDst.Dispose());
+		Observable.Merge(
+				ctrl.Events().HandleDestroyed,
+				ctrl.Events().Disposed
+			)
+			.Take(1)
+			.Subscribe(_ => dispDst.Dispose());
 		return dispDst;
 	}
 }
