@@ -58,7 +58,9 @@ public static class WinFormsUtils
 
 
 	/// <summary>
-	/// Dispose of a Disposable when a Control either receives the HandleDestroyed or Disposed event
+	/// Dispose of a Disposable when a Control either receives the HandleDestroyed or Disposed event <br/>
+	/// I originally thought hooking HandleDestroyed was enough <br/>
+	/// But HandleDestroyed is never called if the control is in a TabPanel (in a TabControl) that is never displayed
 	/// </summary>
 	public static D D<D>(this D dispDst, Control ctrl) where D : IDisposable
 	{
