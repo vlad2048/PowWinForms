@@ -13,5 +13,11 @@ public static class RxExts
 		var d = new Disp();
 		obs.Subscribe(v => rwVar.V = v).D(d);
 		return d;
+
 	}
+	// TODO: Move to PowRxVar
+	public static IRoMayVar<U> Map2<T, U>(this IRoMayVar<T> v, Func<T, U> fun) =>
+		VarMayNoCheck.Make(
+			v.Select(e => e.Select(fun))
+		).D(v);
 }
