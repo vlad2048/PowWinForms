@@ -30,21 +30,23 @@ public static class TreeListViewExts
 	public static IDisposable SetRoot<T>(this TreeListView ctrl, IRoVar<Maybe<TNod<T>>> mayRootVar)
 	{
 		var d = new Disp();
-		mayRootVar.Subscribe(mayRoot =>
-		{
-			switch (mayRoot.IsSome(out var root))
-			{
-				case true:
-					ctrl.SetObjects(new[] { root });
-					ctrl.ExpandAll();
-					break;
+		mayRootVar
+            .ObserveOnWinFormsUIThread()
+            .Subscribe(mayRoot =>
+            {
+                switch (mayRoot.IsSome(out var root))
+                {
+                    case true:
+                        ctrl.SetObjects(new[] { root });
+                        ctrl.ExpandAll();
+                        break;
 
-				case false:
-					ctrl.ClearObjects();
-					ctrl.SelectedIndices.Clear();
-					break;
-			}
-		}).D(d);
+                    case false:
+                        ctrl.ClearObjects();
+                        ctrl.SelectedIndices.Clear();
+                        break;
+                }
+            }).D(d);
 		return d;
 	}
 
