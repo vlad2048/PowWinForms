@@ -76,6 +76,30 @@ public static class TreeListViewExts
 
 		return d;
 	}
+	
+	
+	public static IDisposable GetSelectedNode<T>(
+        this TreeListView ctrl,
+		out IRoMayVar<TNod<T>> selectedNode
+	)
+	{
+		var d = new Disp();
+		
+		selectedNode = VarMay.Make(
+			Observable.Merge(
+				ctrl.Events().ItemSelectionChanged.Select(e => e.IsSelected switch
+				{
+					true => May.Some((TNod<T>)ctrl.SelectedObject),
+					false => May.None<TNod<T>>()
+				}),
+				ctrl.Events().Click.Where(_ => GetNodeUnderMouse<T>(ctrl).IsNone())
+					.Select(_ => May.None<TNod<T>>())
+			)
+		).D(d);
+		
+		return d;
+	}
+	
 
 	public static void NotifyNodeChanged<T>(this TreeListView ctrl, TNod<T> node)
 	{
