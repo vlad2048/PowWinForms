@@ -51,7 +51,7 @@ public static class TreeListViewExts
 	}
 
 
-	public static IDisposable PipeSelectedNodeInto<T>(this TreeListView ctrl, IRwMayVar<TNod<T>> selNode)
+	public static IDisposable PipeSelectedNodeInto<T>(this ObjectListView ctrl, IRwMayVar<TNod<T>> selNode)
 	{
 		var d = new Disp();
 
@@ -69,7 +69,7 @@ public static class TreeListViewExts
 		return d;
 	}
 
-	public static IDisposable PipeHoveredNodeInto<T>(this TreeListView ctrl, IRwMayVar<TNod<T>> hovNode)
+	public static IDisposable PipeHoveredNodeInto<T>(this ObjectListView ctrl, IRwMayVar<TNod<T>> hovNode)
 	{
 		var d = new Disp();
 
@@ -81,7 +81,7 @@ public static class TreeListViewExts
 	
 	
 	public static IDisposable GetSelectedNode<T>(
-        this TreeListView ctrl,
+        this ObjectListView ctrl,
 		out IRoMayVar<TNod<T>> selectedNode
 	)
 	{
@@ -103,7 +103,7 @@ public static class TreeListViewExts
 	}
 	
 
-	public static void NotifyNodeChanged<T>(this TreeListView ctrl, TNod<T> node)
+	public static void NotifyNodeChanged<T>(this ObjectListView ctrl, TNod<T> node)
 	{
 		ctrl.RefreshObject(node);
 	}
@@ -112,7 +112,7 @@ public static class TreeListViewExts
 		ctrl.RefreshObject(parent); // needed for non leaf nodes (otherwise it doesn't appear)
 		ctrl.Reveal(child, true);
 	}
-	public static void NotifyNodeRemoved<T>(this TreeListView ctrl, TNod<T> node)
+	public static void NotifyNodeRemoved<T>(this ObjectListView ctrl, TNod<T> node)
 	{
 		ctrl.RemoveObject(node);
 	}
@@ -121,7 +121,7 @@ public static class TreeListViewExts
 
 
 	public static void AddTextColumn<T>(
-		this TreeListView ctrl,
+		this ObjectListView ctrl,
 		string name,
 		int? width,
 		Func<TNod<T>, string> textFun
@@ -138,7 +138,7 @@ public static class TreeListViewExts
 		});
 
 	public static void AddTextColumnWithColorAndTooltip<T>(
-		this TreeListView ctrl,
+		this ObjectListView ctrl,
 		string name,
 		int? width,
 		Func<TNod<T>, (string, Color?, TooltipDef?)> fun
@@ -168,7 +168,7 @@ public static class TreeListViewExts
 
 
 	public static void AddImageColumn<T>(
-		this TreeListView ctrl,
+		this ObjectListView ctrl,
 		string name,
 		int width,
 		Func<TNod<T>, Image?> imageFun
@@ -186,7 +186,7 @@ public static class TreeListViewExts
 
 
 	public static void AddImageColumnWithTooltip<T>(
-		this TreeListView ctrl,
+		this ObjectListView ctrl,
 		string name,
 		int width,
 		Func<TNod<T>, (Image?, TooltipDef?)> fun
@@ -210,7 +210,7 @@ public static class TreeListViewExts
 	
 
 
-	private static Maybe<TNod<T>> GetNodeUnderMouse<T>(this TreeListView ctrl)
+	private static Maybe<TNod<T>> GetNodeUnderMouse<T>(this ObjectListView ctrl)
 	{
 		if (ctrl.MouseMoveHitTest == null) return May.None<TNod<T>>();
 		var obj = ctrl.MouseMoveHitTest.RowObject;
