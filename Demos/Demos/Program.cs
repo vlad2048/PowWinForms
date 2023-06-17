@@ -1,5 +1,4 @@
 using Demos.Demos.ListBoxSourceListViewerDemo;
-using Demos.Demos.TreeEditorDemo;
 
 namespace Demos;
 
@@ -17,7 +16,6 @@ static class Program
 
 		//Application.Run(new MainWin());
 
-		//Application.Run(new TreeEditorWin());
 		Application.Run(new ListBoxSourceListViewerWin());
 	}
 }

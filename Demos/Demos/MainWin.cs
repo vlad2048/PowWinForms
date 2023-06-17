@@ -1,5 +1,4 @@
 using Demos.Demos.ListBoxSourceListViewerDemo;
-using Demos.Demos.TreeEditorDemo;
 using PowRxVar;
 using PowWinForms;
 
@@ -13,7 +12,6 @@ sealed partial class MainWin : Form
 
 		this.InitRX(d =>
 		{
-			HookBtn<TreeEditorWin>(treeEditorBtn).D(d);
 			HookBtn<ListBoxSourceListViewerWin>(listBoxSourceListViewerBtn).D(d);
 		});
 	}
