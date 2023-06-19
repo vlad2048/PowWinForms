@@ -13,7 +13,7 @@
 			<ExcludeAssets>contentFiles</ExcludeAssets>
 		</PackageReference>
 		<PackageReference Include="PowBasics" Version="0.0.15" />
-		<PackageReference Include="PowRxVar.Maybe" Version="0.0.37" />
+		<PackageReference Include="PowRxVar.Maybe" Version="0.0.38" />
 		<PackageReference Include="PowTrees" Version="0.0.24" />
 		<PackageReference Include="ReactiveUI.Events.Winforms" Version="15.1.1" />
 	</ItemGroup>
