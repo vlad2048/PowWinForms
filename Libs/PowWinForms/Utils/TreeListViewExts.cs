@@ -137,6 +137,28 @@ public static class TreeListViewExts
 			}
 		});
 
+	public static void AddTextColumnWithImage<T>(
+		this ObjectListView ctrl,
+		string name,
+		int? width,
+		Func<TNod<T>, (string, Image)> fun
+	) =>
+		ctrl.Columns.Add(new OLVColumn(name, name)
+		{
+			Width = width ?? 60,
+			FillsFreeSpace = !width.HasValue,
+			AspectGetter = obj => obj switch
+			{
+				TNod<T> nod => fun(nod).Item1,
+				_ => null
+			},
+			ImageGetter = obj => obj switch
+			{
+				TNod<T> nod => fun(nod).Item2,
+				_ => null
+			},
+		});
+
 	public static void AddTextColumnWithColorAndTooltip<T>(
 		this ObjectListView ctrl,
 		string name,
