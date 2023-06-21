@@ -141,7 +141,7 @@ public static class TreeListViewExts
 		this ObjectListView ctrl,
 		string name,
 		int? width,
-		Func<TNod<T>, (string, Image)> fun
+		Func<TNod<T>, (string, Image?)> fun
 	) =>
 		ctrl.Columns.Add(new OLVColumn(name, name)
 		{
