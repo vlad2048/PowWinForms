@@ -28,7 +28,14 @@ public static class ListBoxSourceListViewer
 			};
 		}).D(d);
 
-		var autoSelectDone = false;
+
+		void Add(T elt)
+		{
+			listbox.Items.Add(elt!);
+			listbox.SelectedIndex = 0;
+		}
+
+		/*var autoSelectDone = false;
 
 		void Add(T elt)
 		{
@@ -38,7 +45,7 @@ public static class ListBoxSourceListViewer
 				autoSelectDone = true;
 				listbox.SelectedIndex = 0;
 			}
-		}
+		}*/
 
 		void Del(T elt)
 		{
