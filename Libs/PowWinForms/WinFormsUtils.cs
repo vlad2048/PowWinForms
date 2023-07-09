@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Reactive.Linq;
 using Jot;
 using PowRxVar;
@@ -71,5 +72,11 @@ public static class WinFormsUtils
 			.Take(1)
 			.Subscribe(_ => dispDst.Dispose());
 		return dispDst;
+	}
+
+	public static T D<T>(this (T, IDisposable) dispDstTuple, Control ctrl)
+	{
+		dispDstTuple.Item2.D(ctrl);
+		return dispDstTuple.Item1;
 	}
 }
