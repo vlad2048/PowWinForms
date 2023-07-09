@@ -9,10 +9,10 @@
 	<ItemGroup>
 		<PackageReference Include="DynamicData" Version="7.14.2" />
 		<PackageReference Include="Jot" Version="2.1.16" />
-		<PackageReference Include="PowBasics" Version="0.0.23" />
+		<PackageReference Include="PowBasics" Version="0.0.24" />
 		<PackageReference Include="PowObjectListView" Version="0.0.4" />
 		<PackageReference Include="PowRxVar.Maybe" Version="0.0.44" />
-		<PackageReference Include="PowTrees" Version="0.0.33" />
+		<PackageReference Include="PowTrees" Version="0.0.34" />
 		<PackageReference Include="ReactiveUI.Events.Winforms" Version="15.1.1" />
 	</ItemGroup>
 
