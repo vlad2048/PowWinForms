@@ -27,7 +27,7 @@ public static class TreeListViewExts
 	}
 
 
-	public static IDisposable SetRoot<T>(this TreeListView ctrl, IRoVar<Maybe<TNod<T>>> mayRootVar)
+	public static IDisposable SetRoot<T>(this TreeListView ctrl, IRoMayVar<TNod<T>> mayRootVar)
 	{
 		var d = new Disp();
 		mayRootVar
