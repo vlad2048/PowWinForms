@@ -12,7 +12,7 @@
 		<PackageReference Include="PowBasics" Version="0.0.30" />
 		<PackageReference Include="PowObjectListView" Version="0.0.4" />
 		<PackageReference Include="PowRxVar.Maybe" Version="0.0.45" />
-		<PackageReference Include="PowTrees" Version="0.0.39" />
+		<PackageReference Include="PowTrees" Version="0.0.40" />
 		<PackageReference Include="ReactiveUI.Events.Winforms" Version="15.1.1" />
 	</ItemGroup>
 
